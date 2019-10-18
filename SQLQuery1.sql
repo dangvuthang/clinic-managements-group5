@@ -38,7 +38,7 @@ CREATE TABLE Disease(
 	DiseaseId int NOT NULL PRIMARY KEY IDENTITY(1,1),
 	TypeId int FOREIGN KEY REFERENCES Type(TypeId),
 	[Name] varchar(50),
-	[Image] image,
+	[Image] varchar(255),
 	[Description] varchar(255),
 );
 GO
@@ -47,8 +47,8 @@ CREATE TABLE Product(
 	ProductId int NOT NULL PRIMARY KEY IDENTITY(1,1),
 	Product_GroupId int FOREIGN KEY REFERENCES Product_Group(Product_GroupId),
 	[Name] varchar(50),
-	Price int,
-	[Image] image,
+	Price double,
+	[Image] varchar(255),
 	[Description] varchar(255),
 	Popularity int DEFAULT 0,
 );
@@ -61,7 +61,7 @@ CREATE TABLE [Order](
 	OrderDate date,
 	OrderTime time,
 	OrderStatus bit,
-	OrderTotal int
+	OrderTotal double
 );
 GO
 
@@ -70,7 +70,7 @@ CREATE TABLE OrderDetail(
 	OrderId int FOREIGN KEY REFERENCES [Order](OrderId),
 	ProductId int FOREIGN KEY REFERENCES Product(ProductId),
 	Quantity int,
-	OrderDetailTotal int, 
+	OrderDetailTotal double, 
 );
 
 
