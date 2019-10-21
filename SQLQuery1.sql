@@ -72,6 +72,6 @@ CREATE TABLE OrderDetail(
 	Quantity int,
 	OrderDetailTotal double, 
 );
-
+GO
 
 
