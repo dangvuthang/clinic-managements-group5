@@ -61,6 +61,8 @@ GO
 CREATE TABLE Feedback(
 	FeedbackId int NOT NULL PRIMARY KEY IDENTITY(1,1),
 	OrderId int FOREIGN KEY REFERENCES [Order](OrderId),
+	ProductId int FOREIGN KEY REFERENCES [Product](ProductId),
+	CustomerId int FOREIGN KEY REFERENCES [User](UserId),
 	Content varchar(255)
 )
 
@@ -68,7 +70,6 @@ CREATE TABLE Product(
 	ProductId int NOT NULL PRIMARY KEY IDENTITY(1,1),
 	Product_GroupId int FOREIGN KEY REFERENCES Product_Group(Product_GroupId),
 	TypeId int FOREIGN KEY REFERENCES Type(TypeId),
-	FeedbackId int FOREIGN KEY REFERENCES Feedback(FeedbackId),
 	Code varchar(255),
 	[Name] varchar(50),
 	Price decimal,
