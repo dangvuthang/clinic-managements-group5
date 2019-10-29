@@ -1,4 +1,4 @@
-﻿CREATE DATABASE ClinicManagement;
+CREATE DATABASE ClinicManagement;
 GO
 USE ClinicManagement;
 GO
@@ -58,13 +58,7 @@ GO
 
 
 
-CREATE TABLE Feedback(
-	FeedbackId int NOT NULL PRIMARY KEY IDENTITY(1,1),
-	OrderId int FOREIGN KEY REFERENCES [Order](OrderId),
-	ProductId int FOREIGN KEY REFERENCES [Product](ProductId),
-	CustomerId int FOREIGN KEY REFERENCES [User](UserId),
-	Content varchar(255)
-)
+
 
 CREATE TABLE Product(
 	ProductId int NOT NULL PRIMARY KEY IDENTITY(1,1),
@@ -78,7 +72,13 @@ CREATE TABLE Product(
 	Popularity int DEFAULT 0,
 );
 GO
-
+CREATE TABLE Feedback(
+	FeedbackId int NOT NULL PRIMARY KEY IDENTITY(1,1),
+	OrderId int FOREIGN KEY REFERENCES [Order](OrderId),
+	ProductId int FOREIGN KEY REFERENCES [Product](ProductId),
+	CustomerId int FOREIGN KEY REFERENCES [User](UserId),
+	Content varchar(255)
+)
 CREATE TABLE OrderDetail(
 	OrderDetailId int NOT NULL PRIMARY KEY IDENTITY(1,1),
 	OrderId int FOREIGN KEY REFERENCES [Order](OrderId),
