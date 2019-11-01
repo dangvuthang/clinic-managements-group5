@@ -3,7 +3,7 @@ GO
 USE ClinicManagement;
 GO
 
-CREATE TABLE [User](
+CREATE TABLE [User] (
 	UserId int NOT NULL PRIMARY KEY IDENTITY(1,1),
 	Username varchar(50),
 	[Password] varchar(50),
@@ -28,14 +28,8 @@ Create Table [Type] (
 )
 
 
-CREATE TABLE Product_Group(
-	Product_GroupId int NOT NULL PRIMARY KEY IDENTITY(1,1),
-	[Name] varchar(50)
-);
-GO
-
-
-CREATE TABLE [Order](
+ 
+CREATE TABLE [Order] (
 	OrderId int NOT NULL PRIMARY KEY IDENTITY(1,1),
 	UserId int FOREIGN KEY REFERENCES [User](UserId),
 	Destination varchar(250),
@@ -49,9 +43,9 @@ GO
 
 
 
-CREATE TABLE Product(
+CREATE TABLE Product (
 	ProductId int NOT NULL PRIMARY KEY IDENTITY(1,1),
-	Product_GroupId int FOREIGN KEY REFERENCES Product_Group(Product_GroupId),
+	ProductType varchar(255),
 	TypeId int FOREIGN KEY REFERENCES Type(TypeId),
 	Code varchar(255),
 	[Name] varchar(50),
@@ -62,7 +56,7 @@ CREATE TABLE Product(
 );
 GO
 
-CREATE TABLE Feedback(
+CREATE TABLE Feedback (
 	FeedbackId int NOT NULL PRIMARY KEY IDENTITY(1,1),
 	OrderId int FOREIGN KEY REFERENCES [Order](OrderId),
 	ProductId int FOREIGN KEY REFERENCES [Product](ProductId),
@@ -70,7 +64,7 @@ CREATE TABLE Feedback(
 	Content varchar(255)
 )
 GO
-CREATE TABLE OrderDetail(
+CREATE TABLE OrderDetail (
 	OrderDetailId int NOT NULL PRIMARY KEY IDENTITY(1,1),
 	OrderId int FOREIGN KEY REFERENCES [Order](OrderId),
 	ProductId int FOREIGN KEY REFERENCES Product(ProductId),
@@ -79,7 +73,7 @@ CREATE TABLE OrderDetail(
 );
 GO
 
-CREATE TABLE Speaker(
+CREATE TABLE Speaker (
 	SpeakerId int NOT NULL PRIMARY KEY IDENTITY(1,1),
 	[Name] varchar(255),
 	Degree varchar(255),
@@ -87,9 +81,10 @@ CREATE TABLE Speaker(
 )
 GO
 
-CREATE TABLE Workshop(
+CREATE TABLE Workshop (
 	WorkshopId int NOT NULL PRIMARY KEY IDENTITY(1,1),
 	SpeakerId int FOREIGN KEY REFERENCES Speaker(SpeakerId),
+	WorkshopName varchar(255),
 	[Description] varchar(255),
 	WorkshopDate date,
 	WorkshopTime time
@@ -105,15 +100,12 @@ GO
 
 
 
---INSERT INTO Product_Group([Name])
---VALUES('Machine'),
---	  ('Medicine');
---GO
 
---INSERT INTO Type([Name])
---VALUES('Heart Disease'),
---	  ('Eyes Disease'),
---	  ('Allergies & Asthma'),
---	  ('Ear, nose & throat diseases');
---GO
+INSERT INTO Type(TypeName)
+VALUES('Tablet'),
+	  ('Capsules'),
+	  ('Liquid'),
+	  ('Drops');
+GO
+
 
