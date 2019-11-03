@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>@ViewBag.Title</title>
+    <link href="https://fonts.googleapis.com/css?family=Rubik:400,700|Crimson+Text:400,400i"
+          rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/CSS/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/fonts/icomoon/style.css" />
+    <link rel="stylesheet" href="~/Content/CSS/magnific-popup.css" />
+    <link rel="stylesheet" href="~/Content/CSS/jquery-ui.css" />
+    <link rel="stylesheet" href="~/Content/CSS/owl.carousel.min.css" />
+    <link rel="stylesheet" href="~/Content/CSS/owl.theme.default.min.css" />
+    <link rel="stylesheet" href="~/Content/CSS/style.css" />
+
+</head>
+<body>
+    <div class="site-wrap">
+        <div class="site-navbar py-2">
+            <div class="container">
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="logo">
+                        <div class="site-logo">
+                            <a href="index.html" class="js-logo-clone">MCClinic</a>
+                        </div>
+                    </div>
+                    <div class="main-nav d-none d-lg-block">
+                        <nav class="site-navigation text-right text-md-center"
+                             role="navigation">
+                            <ul class="site-menu js-clone-nav d-none d-lg-block">
+                                @{ var title = new string[5] { "Home", "Store", "About", "Contact", "Workshop" };
+                                    foreach (var item in title) {
+                                        <li class=@(item == ViewBag.Title ? "active" : "")>
+                                            <a href="/@item">@item</a>
+                                        </li>
+                                    }
+                                }
+                                @if (Session["user"] != null) {
+                                    <li><a href="/Account">My Account</a></li>
+                                } else {
+                                    <li><a href="/Register">Register</a></li>
+                                }
+                            </ul>
+                        </nav>
+                    </div>
+                    <div class="icons">
+                        <a href="#"
+                           class="icons-btn d-inline-block"
+                           data-toggle="modal"
+                           data-target="#loginModal">
+                            @if (Session["user"] != null) {
+                                <span class="icon-sign-out" style="font-size: 20px;"></span>
+                            } else {
+                                <span class="icon-sign-in" style="font-size: 20px;"></span>
+                            }
+                        </a>
+                        <a href="cart.html" class="icons-btn d-inline-block bag">
+                            <span class="icon-shopping-bag" style="font-size: 20px;"></span>
+                            <span class="number">2</span>
+                        </a>
+                        <a href="#"
+                           class="site-menu-toggle js-menu-toggle ml-3 d-inline-block d-lg-none">
+                            <span class="icon-menu"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @RenderBody();
+
+        @Html.Partial("Footer")
+    </div>
+
+    <div id="loginModal"
+         class="modal fade"
+         tabindex="-1"
+         role="dialog"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    @if (Session["user"] != null) {
+                        <h3 class="text text-info">Logout</h3>
+                    } else {
+                        <h3>Login</h3>
+                    }
+                    <button type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-hidden="true">
+                        ×
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form"
+                          role="form"
+                          autocomplete="off"
+                          id="formLogin"
+                          novalidate=""
+                          method="POST">
+                        @if (Session["user"] != null) {
+                            <p><i class="fa fa-question-circle"></i> Are you sure you want to logout? <br /></p>
+                            <button type="submit"
+                                    class="btn btn-success"
+                                    id="btnLogin">
+                                Logout
+                            </button>
+                            <button class="btn btn-outline-secondary"
+                                    data-dismiss="modal"
+                                    aria-hidden="true">
+                                Cancel
+                            </button>
+                        } else {
+                            <div class="form-group">
+                                <a href="" class="float-right">New user?</a>
+                                <label for="uname1">Username</label>
+                                <input type="text"
+                                       class="form-control form-control-lg"
+                                       name="uname"
+                                       id="uname" />
+                                <div id="invalid-uname" class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-group">
+                                <label>Password</label>
+                                <input type="password"
+                                       class="form-control form-control-lg"
+                                       id="pwd" />
+                                <div id="invalid-pwd" class="invalid-feedback"></div>
+                            </div>
+                            <div id="message-error" class="alert alert-danger d-none"></div>
+                            <div class="form-group py-4">
+                                <button class="btn btn-outline-secondary btn-lg"
+                                        data-dismiss="modal"
+                                        aria-hidden="true">
+                                    Cancel
+                                </button>
+                                <button type="submit"
+                                        class="btn btn-success btn-lg float-right"
+                                        id="btnLogin">
+                                    Login
+                                </button>
+                            </div>
+                        }
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="~/Scripts/JS/jquery-3.3.1.min.js"></script>
+    <script src="~/Scripts/JS/jquery-ui.js"></script>
+    <script src="~/Scripts/JS/popper.min.js"></script>
+    <script src="~/Scripts/JS/bootstrap.min.js"></script>
+    <script src="~/Scripts/JS/owl.carousel.min.js"></script>
+    <script src="~/Scripts/JS/jquery.magnific-popup.min.js"></script>
+    <script src="~/Scripts/JS/aos.js"></script>
+    <script src="~/Scripts/JS/main.js"></script>
+    <script type="module" src="~/Scripts/JS/module.js"></script>
+    @RenderSection("javascript", false)
+</body>
+</html>

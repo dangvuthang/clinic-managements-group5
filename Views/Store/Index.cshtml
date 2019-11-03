@@ -1,0 +1,136 @@
+﻿@model IEnumerable<WebApplication1.Models.Product>
+
+@{
+    ViewBag.Title = "Store";
+    Layout = "~/Views/Shared/General.cshtml";
+}
+
+@Html.Partial("QuickNav");
+<div class="site-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <h3 class="mb-3 h6 text-uppercase text-black d-block">Show Item</h3>
+                <button class="btn btn-primary">All</button>
+                <button class="btn btn-primary">Machine</button>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary">Medicine</button>
+                    <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="sr-only">Toggle Dropdown</span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Liquid</a>
+                        <a class="dropdown-item" href="#">Tablet</a>
+                        <a class="dropdown-item" href="#">Drops</a>
+                    </div>
+                </div>            
+            </div>
+            <div class="col-lg-6">
+                <h3 class="mb-3 h6 text-uppercase text-black d-block">Sort by Reference</h3>
+                <button type="button" class="btn btn-secondary btn-md dropdown-toggle px-4" id="dropdownMenuReference"
+                        data-toggle="dropdown">
+                    Reference
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuReference">
+                    <a class="dropdown-item" href="#">Name, A to Z</a>
+                    <a class="dropdown-item" href="#">Name, Z to A</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Price, low to high</a>
+                    <a class="dropdown-item" href="#">Price, high to low</a>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="list-of-items">
+            @{foreach (var item in Model) {
+                    <div class="col-sm-6 col-lg-4 text-center item mb-4">
+                        <a href="/Detail/Index/@item.Id"> <img src=@Url.Content("~/Images/" + item.Image) alt=@item.Name></a>
+                        <h3 class="text-dark"><a href="/Detail/Index/@item.Id">@item.Name</a></h3>
+                        <p class="price">$@item.Price.00</p>
+                    </div>
+                } }
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-12 text-center">
+                <div class="site-block-27">
+                    <ul id="pages">
+                        <li><a href="#" class="paginate-pages">&lt;</a></li>
+                        @for (var i = 1; i <= ViewBag.NumberOfPages; i++) {
+                            if (i == 1) {
+                                <li class="active"><a href="" class="paginate-pages">@i</a></li>
+                            } else {
+                                <li><a href="" class="paginate-pages">@i</a></li>
+                            }
+                        }
+                        <li><a href="#" class="paginate-pages">&gt;</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section javascript {
+    <script>
+        const listOfPages = Array.from(document.getElementsByClassName("paginate-pages"));
+        const resetPagesBtn = (targetPage) => {
+            const numberOfPages = @ViewBag.NumberOfPages;
+            listOfPages.forEach(page => {
+                page.parentElement.classList.remove("active")
+                if (parseInt(page.innerText ) === parseInt(targetPage)) page.parentElement.classList.add("active");
+            })
+        }
+        const showData = data => {
+            const imageRoot = "@Url.Content("~/Images/")";
+            const listOfItems = document.getElementById("list-of-items");
+            const htmlElement = data.map(item => `
+                        <div class="col-sm-6 col-lg-4 text-center item mb-4">
+                            <a href="/Detail/Index/${item.Id}"> <img src=${imageRoot + item.Image} alt=${item.Name}></a>
+                            <h3 class="text-dark"><a href="/Detail/Index/${item.Id}">${item.Name}</a></h3>
+                            <p class="price">$${item.Price}.00</p>
+                        </div>`).join(" ");
+            listOfItems.innerHTML = htmlElement;
+        }
+        listOfPages.forEach(element => element.addEventListener("click", (e) => {
+            e.preventDefault();
+            var targetPage = parseInt(e.target.innerText);
+            var sortBy = document.querySelector("a.dropdown-item.chosen");
+            resetPagesBtn(targetPage)
+            if (sortBy !== null) sortBy = sortBy.innerText;
+            fetch("http://localhost:57474/Store/ChangePage", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    targetPage,
+                    sortBy
+                })
+            }).then(data => data.json())
+                .then(result => {
+                    console.log(result);
+                    showData(result);
+                })
+        }))
+        const listOfSortBy = Array.from(document.getElementsByClassName("dropdown-item"));
+        listOfSortBy.forEach(element => element.addEventListener("click", e => {
+            e.preventDefault();
+            const sortBy = e.target.innerText;
+            listOfSortBy.forEach(element => {
+                element.classList.remove("chosen");
+                if(element == e.target) element.classList.add("chosen")
+            })
+            resetPagesBtn(1);
+            fetch("http://localhost:57474/Store/ChangePage", {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    targetPage: 1,
+                    sortBy: sortBy
+                })
+            }).then(data => data.json()).then(result => { console.log(result); showData(result) })
+        }))
+    </script>
+}
+
