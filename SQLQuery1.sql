@@ -10,7 +10,7 @@ CREATE TABLE [User] (
 	[Name] varchar(50),
 	Phone int,
 	[Address] varchar(255),
-	[Status] bit,	
+	[Active] bit DEFAULT 1,	
 );
 GO
 
