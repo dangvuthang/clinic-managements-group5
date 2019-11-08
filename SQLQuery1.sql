@@ -5,12 +5,13 @@ GO
 
 CREATE TABLE [User] (
 	UserId int NOT NULL PRIMARY KEY IDENTITY(1,1),
-	Username varchar(50),
+	Email varchar(50),
 	[Password] varchar(50),
 	[Name] varchar(50),
+	IsBoy bit,
 	Phone int,
 	[Address] varchar(255),
-	[Active] bit DEFAULT 1,	
+	Active bit DEFAULT 1,	
 );
 GO
 
@@ -45,7 +46,8 @@ GO
 
 CREATE TABLE Product (
 	ProductId int NOT NULL PRIMARY KEY IDENTITY(1,1),
-	ProductType varchar(255),
+	--ProductType Machine OR Medicine
+	ProductType varchar(255), 
 	TypeId int FOREIGN KEY REFERENCES Type(TypeId),
 	Code varchar(255),
 	[Name] varchar(50),
@@ -63,6 +65,7 @@ CREATE TABLE Feedback (
 	CustomerId int FOREIGN KEY REFERENCES [User](UserId),
 	Content varchar(255)
 )
+
 GO
 CREATE TABLE OrderDetail (
 	OrderDetailId int NOT NULL PRIMARY KEY IDENTITY(1,1),
@@ -100,12 +103,11 @@ GO
 
 
 
-
-INSERT INTO Type(TypeName)
-VALUES('Tablet'),
-	  ('Capsules'),
-	  ('Liquid'),
-	  ('Drops');
-GO
+--INSERT INTO Type(TypeName)
+--VALUES('Tablet'),
+--	  ('Capsules'),
+--	  ('Liquid'),
+--	  ('Drops');
+--GO
 
 
