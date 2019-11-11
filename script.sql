@@ -87,6 +87,7 @@ CREATE TABLE [dbo].[Admin](
 	[Username] [varchar](50) NULL,
 	[Password] [varchar](50) NULL,
 	[Name] [varchar](50) NULL,
+	[Role] [int] NULL,
 PRIMARY KEY CLUSTERED 
 (
 	[AdminId] ASC
@@ -254,13 +255,13 @@ PRIMARY KEY CLUSTERED
 GO
 SET IDENTITY_INSERT [dbo].[Admin] ON 
 
-INSERT [dbo].[Admin] ([AdminId], [Username], [Password], [Name]) VALUES (1, N'PhucAnh', N'123456', N'Phuc')
-INSERT [dbo].[Admin] ([AdminId], [Username], [Password], [Name]) VALUES (2, N'HuuThang', N'123456', N'Thang')
-INSERT [dbo].[Admin] ([AdminId], [Username], [Password], [Name]) VALUES (3, N'VanVu', N'123456', N'Vu')
-INSERT [dbo].[Admin] ([AdminId], [Username], [Password], [Name]) VALUES (4, N'TheAnh', N'123456', N'Anh')
-INSERT [dbo].[Admin] ([AdminId], [Username], [Password], [Name]) VALUES (5, N'Phuc', N'123456', N'PhucEm')
+INSERT [dbo].[Admin] ([AdminId], [Username], [Password], [Name], [Role]) VALUES (1, N'PhucAnh', N'123456', N'Phuc', 1)
+INSERT [dbo].[Admin] ([AdminId], [Username], [Password], [Name], [Role]) VALUES (2, N'HuuThang', N'123456', N'Thang', 0)
+INSERT [dbo].[Admin] ([AdminId], [Username], [Password], [Name], [Role]) VALUES (3, N'VanVu', N'123456', N'Vu', 0)
+INSERT [dbo].[Admin] ([AdminId], [Username], [Password], [Name], [Role]) VALUES (4, N'TheAnh', N'123456', N'Anh', 0)
+INSERT [dbo].[Admin] ([AdminId], [Username], [Password], [Name], [Role]) VALUES (5, N'Phuc', N'123456', N'PhucEm', 0)
 SET IDENTITY_INSERT [dbo].[Admin] OFF
-SET IDENTITY_INSERT [dbo].[Feedback] ON 
+SET IDENTITY_INSERT [dbo].[Product] ON  
 
 INSERT [dbo].[Feedback] ([FeedbackId], [OrderId], [ProductId], [CustomerId], [Content]) VALUES (1, 1, 4, 1, N'You have a good service')
 INSERT [dbo].[Feedback] ([FeedbackId], [OrderId], [ProductId], [CustomerId], [Content]) VALUES (2, 2, 22, 2, N'This place is a heave for clinics')
@@ -469,3 +470,4 @@ USE [master]
 GO
 ALTER DATABASE [ClinicManagement] SET  READ_WRITE 
 GO
+Alter table
