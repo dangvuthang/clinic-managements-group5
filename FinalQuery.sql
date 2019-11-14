@@ -101,13 +101,14 @@ CREATE TABLE Contact (
 )
 GO
 
-INSERT [dbo].[Admin] ([Username], [Password], [Name]) VALUES ('PhucAnh', '123456', 'Phuc')
-															,('HuuThang', '123456', 'Thang')
-															,('VanVu', '123456', 'Vu')
-															,('TheAnh', '123456', 'Anh')
-															,('Phuc', '123456', 'PhucEm')
+SET IDENTITY_INSERT [dbo].[Admin] ON 
 
-
+INSERT [dbo].[Admin] ([AdminId], [Username], [Password], [Name]) VALUES (1, N'PhucAnh', N'123456789', N'Phuc')
+INSERT [dbo].[Admin] ([AdminId], [Username], [Password], [Name]) VALUES (2, N'HuuThang', N'123456', N'Thang')
+INSERT [dbo].[Admin] ([AdminId], [Username], [Password], [Name]) VALUES (5, N'Phuc', N'123456789', N'PhucEm')
+INSERT [dbo].[Admin] ([AdminId], [Username], [Password], [Name]) VALUES (7, N'Aquarrrr', N'123456', N'Aqarrrr')
+INSERT [dbo].[Admin] ([AdminId], [Username], [Password], [Name]) VALUES (8, N'Phuc123', N'123456', N'Phuc')
+SET IDENTITY_INSERT [dbo].[Admin] OFF
 
 
 
