@@ -11,7 +11,7 @@ CREATE TABLE [User] (
 	[Password] varchar(50),
 	[Name] varchar(50),
 	IsBoy bit,
-	Phone int,
+	Phone varchar(50),
 	[Address] varchar(255),
 	Active bit DEFAULT 1,	
 );
